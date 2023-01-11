@@ -50,9 +50,20 @@ Panel {
                 onTriggered: {
                      if(nodeStartDateTime === ""){
                         nodeStartDateTime = new Date(node.getFirstChunkRunning()).getTime()
-                    }
+                     }
                     var now = new Date().getTime()
                     parent.text=Format.getTimeStr((now-nodeStartDateTime)/1000)
+
+                    var chunkCompletion=0
+                    if( node.chunks.count>1){
+                        for (var i = 0; i < node.chunks.count; i++) {
+                            if(node.chunks.at(i).statusName == "SUCCESS"){
+                                chunkCompletion++
+                            }
+                        }
+                        parent.text+= " | "+ chunkCompletion + "/" + node.chunks.count + " chunks"
+                    }
+
                 }
             }
             padding: 2
