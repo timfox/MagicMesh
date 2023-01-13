@@ -301,7 +301,7 @@ FocusScope {
 
     Connections {
         target: _reconstruction
-        onSelectedViewIdChanged: {
+        function onSelectedViewIdChanged() {
             root.source = getImageFile();
             if (useExternal)
                 useExternal = false;
