@@ -26,8 +26,8 @@ Panel {
     title: "Node" + (node !== null ? " - <b>" + node.label + "</b>" : "")
     icon: MaterialLabel { text: MaterialIcons.tune }
 
-    onGlobalStatusChanged: {
-        nodeStartDateTime=""
+    function updateComputationTime(){
+         nodeStartDateTime=""
         if(node !== null && node.isRunning()){
             timer.start()
         }
@@ -40,6 +40,14 @@ Panel {
                 computationInfo.text =  ""
             }
         }
+    }
+
+    onNodeChanged: {
+        updateComputationTime()
+    }
+
+    onGlobalStatusChanged: {
+         updateComputationTime()
     }
 
     headerBar: RowLayout {
