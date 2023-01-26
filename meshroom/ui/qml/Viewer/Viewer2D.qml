@@ -84,17 +84,17 @@ FocusScope {
         }
         if(mfeaturesLoader.status === Loader.Ready)
         {
-            if(mfeaturesLoader.item.status === MFeatures.Loading)
+            if(mfeaturesLoader.item && mfeaturesLoader.item.status === MFeatures.Loading)
                 res += " Features";
         }
         if(mtracksLoader.status === Loader.Ready)
         {
-            if(mtracksLoader.item.status === MTracks.Loading)
+            if(mtracksLoader.item && mtracksLoader.item.status === MTracks.Loading)
                 res += " Tracks";
         }
         if(msfmDataLoader.status === Loader.Ready)
         {
-            if(msfmDataLoader.item != null && msfmDataLoader.item.status === MSfMData.Loading)
+            if(msfmDataLoader.item && msfmDataLoader.item.status === MSfMData.Loading)
             {
                 res += " SfMData";
             }
@@ -472,7 +472,7 @@ FocusScope {
                                 'isHighlightable': Qt.binding(function(){ return panoramaViewerToolbar.enableHover;}),
                                 'displayGridPano': Qt.binding(function(){ return panoramaViewerToolbar.displayGrid;}),
                                 'mouseMultiplier': Qt.binding(function(){ return panoramaViewerToolbar.mouseSpeed;}),
-                                'msfmData': Qt.binding(function() { return (msfmDataLoader.status === Loader.Ready
+                                'msfmData': Qt.binding(function() { return (msfmDataLoader && msfmDataLoader.item && msfmDataLoader.status === Loader.Ready
                                                                            && msfmDataLoader.item.status === 2) ? msfmDataLoader.item : null; }),
                             })
                         } else {

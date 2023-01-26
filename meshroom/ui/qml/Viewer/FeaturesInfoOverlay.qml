@@ -99,7 +99,7 @@ FloatingPane {
                                 ToolTip.visible: hovered
                                 Layout.fillHeight: true
                                 Layout.alignment: Qt.AlignRight
-                                checked: root.featuresViewer.trackContiguousFilter
+                                checked: root.featuresViewer ? root.featuresViewer.trackContiguousFilter : false
                                 onClicked: root.featuresViewer.trackContiguousFilter = trackContiguousFilterCB.checked
                             }
                         }
@@ -113,7 +113,7 @@ FloatingPane {
                                 ToolTip.visible: hovered
                                 Layout.fillHeight: true
                                 Layout.alignment: Qt.AlignRight
-                                checked: root.featuresViewer.trackInliersFilter
+                                checked: root.featuresViewer ? root.featuresViewer.trackInliersFilter : false
                                 onClicked: root.featuresViewer.trackInliersFilter = trackInliersFilterCB.checked
                             }
                         }
@@ -127,7 +127,7 @@ FloatingPane {
                                 ToolTip.visible: hovered
                                 Layout.fillHeight: true
                                 Layout.alignment: Qt.AlignRight
-                                checked: root.featuresViewer.display3dTracks
+                                checked: root.featuresViewer ? root.featuresViewer.display3dTracks : false
                                 onClicked: root.featuresViewer.display3dTracks = display3dTracksCB.checked
                             }
                         }
@@ -157,7 +157,7 @@ FloatingPane {
                                 Layout.alignment: Qt.AlignRight
                                 from: -1
                                 to: 50
-                                value: root.mfeatures.timeWindow
+                                value: root.mfeatures ? root.mfeatures.timeWindow : 0
                                 stepSize: 1
                                 editable: true
 
@@ -174,7 +174,8 @@ FloatingPane {
                                 }
 
                                 onValueChanged: {
-                                    root.mfeatures.timeWindow = timeWindowSB.value;
+                                    if (root.mfeatures)
+                                        root.mfeatures.timeWindow = timeWindowSB.value;
                                 }
                             }
                         }
@@ -265,16 +266,23 @@ FloatingPane {
                 Label {
                     text: {
                         if(featureType.viewer.loadingFeatures)
-                            return  featureType.viewer.describerType;
+                            return featureType.viewer.describerType;
+
+                        let featuresInfoAvailable = false;
+                        if (root.mfeatures !== null)
+                            featuresInfoAvailable = root.mfeatures.featuresInfo[featureType.viewer.describerType] !== undefined;
                         return featureType.viewer.describerType + ": " +
-                                ((featureExtractionNode && featureExtractionNode.isComputed) ? root.mfeatures.featuresInfo[featureType.viewer.describerType][root.mfeatures.currentViewId]['nbFeatures'] : " - ") + " / " +
-                                (root.mfeatures.haveValidTracks ? root.mfeatures.featuresInfo[featureType.viewer.describerType][root.mfeatures.currentViewId]['nbTracks']  : " - ") + " / " +
-                                (root.mfeatures.haveValidLandmarks ? root.mfeatures.featuresInfo[featureType.viewer.describerType][root.mfeatures.currentViewId]['nbLandmarks'] : " - ");
+                                ((featureExtractionNode && featureExtractionNode.isComputed && featuresInfoAvailable)
+                                    ? root.mfeatures.featuresInfo[featureType.viewer.describerType][root.mfeatures.currentViewId]['nbFeatures'] : " - ") + " / " +
+                                (root.mfeatures && root.mfeatures.haveValidTracks && featuresInfoAvailable
+                                    ? root.mfeatures.featuresInfo[featureType.viewer.describerType][root.mfeatures.currentViewId]['nbTracks']  : " - ") + " / " +
+                                (root.mfeatures && root.mfeatures.haveValidLandmarks && featuresInfoAvailable
+                                    ? root.mfeatures.featuresInfo[featureType.viewer.describerType][root.mfeatures.currentViewId]['nbLandmarks'] : " - ");
                     }
                 }
                 // Feature loading status
                 Loader {
-                    active: (root.mfeatures.status === MFeatures.Loading)
+                    active: (root.mfeatures != null && root.mfeatures.status === MFeatures.Loading)
                     sourceComponent: BusyIndicator {
                         padding: 0
                         implicitWidth: 12
