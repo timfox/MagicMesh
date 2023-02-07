@@ -3,6 +3,7 @@ set -ex
 
 
 test -z "$MESHROOM_VERSION" && MESHROOM_VERSION="$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)"
+<<<<<<< HEAD
 echo "MESHROOM_VERSION=${MESHROOM_VERSION}"
 
 test -z "$CUDA_VERSION" && CUDA_VERSION="11.3.1"
@@ -22,7 +23,8 @@ test -d docker || (
 test -d dl || \
         mkdir dl
 test -f dl/qt.run || \
-        wget "https://download.qt.io/archive/qt/5.14/5.14.1/qt-opensource-linux-x64-5.14.1.run" -O "dl/qt.run" --no-check-certificate
+        wget --no-check-certificate "https://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run" -O "dl/qt.run"
+
 
 # DEPENDENCIES
 
