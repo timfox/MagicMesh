@@ -1247,6 +1247,10 @@ FocusScope {
 
                     }
                 }
+
+                FloatingPane {
+                    SequencePlayer {}
+                }
             }
         }
     }
