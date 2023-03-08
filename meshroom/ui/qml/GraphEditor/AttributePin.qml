@@ -35,6 +35,16 @@ RowLayout {
     layoutDirection: Qt.LeftToRight
     spacing: 3
 
+    function updatePin(isSrc, isVisible)
+    {
+        if (isSrc) {
+            innerOutputAnchor.linkEnabled = isVisible
+        } else {
+            innerInputAnchor.linkEnabled = isVisible
+        }
+
+    }
+
     // Instantiate empty Items for each child attribute
     Repeater {
         id: childrenRepeater
@@ -55,11 +65,13 @@ RowLayout {
         radius: isList ? 0 : width/2
         Layout.alignment: Qt.AlignVCenter
 
-        border.color:  Colors.sysPalette.mid
+        border.color: Colors.sysPalette.mid
         color: Colors.sysPalette.base
 
         Rectangle {
-            visible: inputConnectMA.containsMouse || childrenRepeater.count > 0 || (attribute && attribute.isLink) || inputConnectMA.drag.active || inputDropArea.containsDrag
+            id: innerInputAnchor
+            property bool linkEnabled: true
+            visible: inputConnectMA.containsMouse || childrenRepeater.count > 0 || (attribute && attribute.isLink && linkEnabled) || inputConnectMA.drag.active || inputDropArea.containsDrag
             radius: isList ? 0 : 2
             anchors.fill: parent
             anchors.margins: 2
@@ -209,7 +221,9 @@ RowLayout {
         color: Colors.sysPalette.base
 
         Rectangle {
-            visible: attribute.hasOutputConnections || outputConnectMA.containsMouse || outputConnectMA.drag.active || outputDropArea.containsDrag
+            id: innerOutputAnchor
+            property bool linkEnabled: true
+            visible: (attribute.hasOutputConnections && linkEnabled) || outputConnectMA.containsMouse || outputConnectMA.drag.active || outputDropArea.containsDrag
             radius: isList ? 0 : 2
             anchors.fill: parent
             anchors.margins: 2
