@@ -133,8 +133,17 @@ Estimate relative camera rotations between input images.
         desc.FloatParam(
             name='maxAngleToPrior',
             label='Max Angle To Priors (deg.)',
-            description='''Maximal angle allowed regarding the input prior (in degrees).''',
+            description='''Maximal angle allowed regarding the input prior (in degrees) before refinement.''',
             value=20.0,
+            range=(0.0, 360.0, 1.0),
+            uid=[0],
+            advanced=True,
+        ),
+        desc.FloatParam(
+            name='maxAngleToPriorRefined',
+            label='Max Refined Angle To Priors (deg.)',
+            description='''Maximal angle allowed regarding the input prior (in degrees) after refinement.''',
+            value=2.0,
             range=(0.0, 360.0, 1.0),
             uid=[0],
             advanced=True,
