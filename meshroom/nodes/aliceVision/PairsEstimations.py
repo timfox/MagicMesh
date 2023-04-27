@@ -6,6 +6,9 @@ from meshroom.core import desc
 class PairsEstimations(desc.AVCommandLineNode):
     commandLine = 'aliceVision_pairsEstimations {allParams}'
     size = desc.DynamicNodeSize('input')
+    
+    parallelization = desc.Parallelization(blockSize=25)
+    commandLineRange = '--rangeStart {rangeStart} --rangeSize {rangeBlockSize}'
 
     category = 'Sparse Reconstruction'
     documentation = '''
