@@ -3,8 +3,8 @@ __version__ = "2.0"
 from meshroom.core import desc
 
 
-class BootStrapSfM(desc.AVCommandLineNode):
-    commandLine = 'aliceVision_bootstrapSfM {allParams}'
+class SfMBootStraping(desc.AVCommandLineNode):
+    commandLine = 'aliceVision_sfmBootstraping {allParams}'
     size = desc.DynamicNodeSize('input')
 
     category = 'Sparse Reconstruction'
@@ -38,6 +38,13 @@ class BootStrapSfM(desc.AVCommandLineNode):
             value='',
             uid=[0],
         ),
+        desc.File(
+            name='pairs',
+            label='Pairs file',
+            description='Information on pairs.',
+            value='',
+            uid=[0],
+        ),
         desc.ChoiceParam(
             name='describerTypes',
             label='Describer Types',
@@ -47,24 +54,6 @@ class BootStrapSfM(desc.AVCommandLineNode):
             exclusive=False,
             uid=[0],
             joinChar=',',
-        ),
-        desc.FloatParam(
-            name='minAngleInitialPair',
-            label='Min Angle Initial Pair',
-            description='Minimum angle for the initial pair.',
-            value=5.0,
-            range=(0.1, 10.0, 0.1),
-            uid=[0],
-            advanced=True,
-        ),
-        desc.FloatParam(
-            name='maxAngleInitialPair',
-            label='Max Angle Initial Pair',
-            description='Maximum angle for the initial pair.',
-            value=40.0,
-            range=(0.1, 60.0, 0.1),
-            uid=[0],
-            advanced=True,
         ),
         desc.ChoiceParam(
             name='verboseLevel',

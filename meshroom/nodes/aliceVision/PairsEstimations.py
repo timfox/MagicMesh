@@ -66,8 +66,8 @@ class PairsEstimations(desc.AVCommandLineNode):
         desc.File(
             name='output',
             label='Pairs Infos',
-            description='Path to the output Pairs info file',
-            value=desc.Node.internalFolder + 'sfm.json',
+            description='Path to the output Pairs info files directory',
+            value=desc.Node.internalFolder,
             uid=[],
         )
     ]
