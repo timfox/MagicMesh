@@ -51,6 +51,19 @@ Overall presentation of the protogrammetry practice with Meshroom and detailed p
 Presentation of the Meshroom software with a focus on using it for Match Moving.
 
 
+## Customization
+
+### Custom Pipelines
+
+You can create custom pipelines in the user interface and save it as template: "File > Advanced > Save As Template".
+You can define the `MESHROOM_PIPELINE_TEMPLATES_PATH` environment variable to specific folders to makes these pipelines available in Meshroom.
+
+### Custom Nodes
+
+You can also create custom nodes in python and make them available in Meshroom using the `MESHROOM_NODES_PATH` environment variable.
+[Here is an example](meshroom/nodes/blender/RenderAnimatedCamera.py) to launch a Blender rendering from Meshroom.
+
+
 ## License
 
 The project is released under MPLv2, see [**COPYING.md**](COPYING.md).
